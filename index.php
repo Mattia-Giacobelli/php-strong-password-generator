@@ -7,6 +7,11 @@
         $passwordLength = (int) $_GET['length'];
     }
 
+    $repeat = $_GET["repeat"] ?? 'off';
+    $capitals = $_GET["capitals"] ?? 'off';
+    $numbers = $_GET["numbers"] ?? 'off';
+    $symbols = $_GET["symbols"] ?? 'off';
+
     require './functions.php'
 
 ?>
@@ -32,18 +37,32 @@
              <label for="exampleInputPassword1" class="form-label">Password length</label>
              <input type="number" class="form-control" id="exampleInputPassword1" name="length" min='8' max='30' >
          </div>
-            <!-- <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="parking">
-                <label class="form-check-label" for="exampleCheck1">Parking</label>
-            </div> -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="repeat">
+                <label class="form-check-label" for="exampleCheck1">Consenti ripetizioni</label>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="capitals">
+                <label class="form-check-label" for="exampleCheck1">Lettere Maiuscole</label>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="numbers">
+                <label class="form-check-label" for="exampleCheck1">Numeri</label>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="symbols">
+                <label class="form-check-label" for="exampleCheck1">Simboli</label>
+            </div>
             <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
 
         <a href="./result.php">Visualizza la password</a>
 
         <?php
+
+            // echo 'prova' . str_contains('ciao', 'c');
         
-            passwordGen($passwordLength);
+            passwordGen($passwordLength,$repeat, $capitals, $numbers, $symbols);
 
         ?>
 
