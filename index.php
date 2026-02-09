@@ -1,7 +1,11 @@
-
 <?php 
 
-    $passwordLength = (int) $_GET['length'];
+    session_start();
+
+    if (isset($_GET['length'])) {
+        
+        $passwordLength = (int) $_GET['length'];
+    }
 
     require './functions.php'
 
@@ -35,11 +39,11 @@
             <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
 
+        <a href="./result.php">Visualizza la password</a>
+
         <?php
         
-            echo "$passwordLength <br>";
-
-            echo passwordGen($passwordLength);
+            passwordGen($passwordLength);
 
         ?>
 
