@@ -1,53 +1,47 @@
-<?php 
+<?php
 
 
-    function passwordGen( int $length = 8, string $repeat = 'off',string $capitalStatus = 'off',string $numberStatus = 'off',string $symbolStatus = 'off') : string {
-        global $_SESSION;
+function passwordGen(int $length = 8, string $repeat = 'off', string $capitalStatus = 'off', string $numberStatus = 'off', string $symbolStatus = 'off'): string
+{
+    global $_SESSION;
 
-        $characters = "qwertyuiopasdfghjklzxcvbnm";
-        $capitalStatus == 'on' ? $capitals = 'QWERTYUIOPASDFGHJKLZXCVBNM' : $capitals = '';
-        $numberStatus == 'on' ? $numbers = '1234567890' : $numbers = '';
-        $symbolStatus == 'on' ? $symbols = '!@#$%&' : $symbols = '';
-        $password ='';
+    $characters = "qwertyuiopasdfghjklzxcvbnm";
+    $capitalStatus == 'on' ? $capitals = 'QWERTYUIOPASDFGHJKLZXCVBNM' : $capitals = '';
+    $numberStatus == 'on' ? $numbers = '1234567890' : $numbers = '';
+    $symbolStatus == 'on' ? $symbols = '!@#$%&' : $symbols = '';
+    $password = '';
 
 
-        if ( $repeat == 'on') {
-            
-            $characters .= $capitals . $numbers . $symbols;
+    if ($repeat == 'on') {
 
-            do {
-                
-                $password .= $characters[random_int(0, strlen($characters) -1 )];
-    
-            } while (strlen($password) < $length );
+        $characters .= $capitals . $numbers . $symbols;
 
-        } else if ($repeat =='off') {
+        do {
 
-            if ($repeat === 'off' && $length > strlen($characters)) {
-                echo 'Errore: lunghezza troppo grande senza ripetizioni';
-                return 'error';
+            $password .= $characters[random_int(0, strlen($characters) - 1)];
+        } while (strlen($password) < $length);
+    } else if ($repeat == 'off') {
+
+        $characters .= $capitals . $numbers . $symbols;
+
+        if ($repeat === 'off' && $length > strlen($characters)) {
+            echo 'Errore: lunghezza troppo grande senza ripetizioni';
+            return 'error';
+        }
+
+
+        do {
+            $character = $characters[random_int(0, strlen($characters) - 1)];
+
+            if (!str_contains($password, $character)) {
+
+                $password .= $character;
             }
+        } while (strlen($password) < $length);
+    }
 
-            $characters .= $capitals . $numbers . $symbols;
 
-            do {
-                $character = $characters[random_int(0, strlen($characters) -1 )];
+    $_SESSION['password'] = $password;
 
-                if (!str_contains($password, $character)){
-
-                    $password .= $character;
-
-                }
-    
-            } while (strlen($password) < $length );
-
-        }
-        
-
-        $_SESSION['password'] = $password;
-
-        return $password;
-
-        }
-
-?>
+    return $password;
+}

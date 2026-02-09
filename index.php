@@ -1,18 +1,26 @@
-<?php 
+<?php
 
-    session_start();
+session_start();
 
-    if (isset($_GET['length'])) {
-        
-        $passwordLength = (int) $_GET['length'];
-    }
+$passwordLength = 0;
 
-    $repeat = $_GET["repeat"] ?? 'off';
-    $capitals = $_GET["capitals"] ?? 'off';
-    $numbers = $_GET["numbers"] ?? 'off';
-    $symbols = $_GET["symbols"] ?? 'off';
+if (isset($_GET['length'])) {
 
-    require './functions.php'
+    $passwordLength = (int) $_GET['length'];
+};
+
+$repeat = $_GET["repeat"] ?? 'off';
+$capitals = $_GET["capitals"] ?? 'off';
+$numbers = $_GET["numbers"] ?? 'off';
+$symbols = $_GET["symbols"] ?? 'off';
+
+require_once './functions.php';
+
+passwordGen($passwordLength, $repeat, $capitals, $numbers, $symbols);
+
+if ($passwordLength != 0) {
+    header('Location: ./result.php');
+}
 
 ?>
 
@@ -21,6 +29,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,14 +38,15 @@
 
     <title>Password Generator</title>
 </head>
+
 <body>
 
     <div class="d-flex flex-column align-items-center">
-        <form action="" method="GET" >
-         <div class="mb-3 mt-5">
-             <label for="exampleInputPassword1" class="form-label">Password length</label>
-             <input type="number" class="form-control" id="exampleInputPassword1" name="length" min='8' max='30' >
-         </div>
+        <form action="" method="GET">
+            <div class="mb-3 mt-5">
+                <label for="exampleInputPassword1" class="form-label">Password length</label>
+                <input type="number" class="form-control" id="exampleInputPassword1" name="length" min='8' max='30'>
+            </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1" name="repeat">
                 <label class="form-check-label" for="exampleCheck1">Consenti ripetizioni</label>
@@ -53,16 +63,15 @@
                 <input type="checkbox" class="form-check-input" id="exampleCheck1" name="symbols">
                 <label class="form-check-label" for="exampleCheck1">Simboli</label>
             </div>
-            <button type="submit" class="btn btn-primary" >Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
-        <a href="./result.php">Visualizza la password</a>
 
         <?php
 
-            // echo 'prova' . str_contains('ciao', 'c');
-        
-            passwordGen($passwordLength,$repeat, $capitals, $numbers, $symbols);
+        // echo 'prova' . str_contains('ciao', 'c');
+        // echo $passwordLength;
+
+
 
         ?>
 
@@ -75,4 +84,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
+
 </html>
